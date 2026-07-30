@@ -19,6 +19,10 @@ public abstract class BaseTest {
     static void setUp() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
 
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-gpu");
+
         String remoteUrl = System.getenv().getOrDefault(
                 "SELENIUM_REMOTE_URL",
                 "http://host.docker.internal:4444/wd/hub"
