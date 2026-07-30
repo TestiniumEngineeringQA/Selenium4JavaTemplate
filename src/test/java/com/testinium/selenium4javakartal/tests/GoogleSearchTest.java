@@ -47,7 +47,6 @@ public class GoogleSearchTest extends BaseTest {
         //String browserName = System.getenv("browser");
 
         // RemoteWebDriver yerine kendi TestiniumSeleniumDriver'ını options ile başlat
-        RemoteWebDriver driver = new TestiniumSeleniumDriver(new URL("http://host.docker.internal:4444/wd/hub"), options);
 
         driver.get("https://www.amazon.com");
         System.out.println("Page title: " + driver.getTitle());
@@ -67,7 +66,6 @@ public class GoogleSearchTest extends BaseTest {
         //String browserName = System.getenv("browser");
 
         // RemoteWebDriver yerine kendi TestiniumSeleniumDriver'ını options ile başlat
-        RemoteWebDriver driver = new TestiniumSeleniumDriver(new URL("http://host.docker.internal:4444/wd/hub"), options);
 
         driver.get("https://www.google.com");
         System.out.println("Page title: " + driver.getTitle());
@@ -87,7 +85,6 @@ public class GoogleSearchTest extends BaseTest {
         //String browserName = System.getenv("browser");
 
         // RemoteWebDriver yerine kendi TestiniumSeleniumDriver'ını options ile başlat
-        RemoteWebDriver driver = new TestiniumSeleniumDriver(new URL("http://host.docker.internal:4444/wd/hub"), options);
 
         driver.get("https://www.microsoft.com");
         System.out.println("Page title: " + driver.getTitle());
