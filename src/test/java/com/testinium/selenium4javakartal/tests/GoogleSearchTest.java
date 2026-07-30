@@ -1,37 +1,39 @@
 package com.testinium.selenium4javakartal.tests;
 
+import com.testinium.selenium4javakartal.baseTest.BaseTest;
 import com.testinium.driver.TestiniumSeleniumDriver;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GoogleSearchTest {
-    private RemoteWebDriver driver;
-
+public class GoogleSearchTest extends BaseTest {
 
     @Test
     public void searchSelenium() {
+        driver.get("https://www.google.com");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
         // Dismiss cookie consent if present
         try {
-            WebElement consentButton = driver.findElement(By.xpath("//div[contains(@class,'VfPpkd-RLmnJb') or @id='L2AGLb']"));
-            if (consentButton.isDisplayed()) {
-                consentButton.click();
-            }
+            WebElement consentButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("L2AGLb")));
+            consentButton.click();
         } catch (Exception ignored) {}
 
-        WebElement searchBox = driver.findElement(By.name("q"));
+        WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("q")));
         searchBox.sendKeys("Selenium");
         searchBox.submit();
 
-        WebElement results = driver.findElement(By.id("search"));
+        WebElement results = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("search")));
         assertTrue(results.isDisplayed());
         assertTrue(driver.getTitle().toLowerCase().contains("selenium"));
     }

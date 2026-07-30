@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.stream.Stream;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseTest {
@@ -16,23 +17,28 @@ public abstract class BaseTest {
     protected static RemoteWebDriver driver;
 
     @BeforeAll
-    static void setUp() throws MalformedURLException {
+    protected static void setUp() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
 
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
 
-        String remoteUrl = System.getenv().getOrDefault(
-                "SELENIUM_REMOTE_URL",
-                "http://host.docker.internal:4444/wd/hub"
-        );
+        String remoteUrl = Stream.of(
+                        System.getProperty("selenium.remote.url"),
+                        System.getProperty("hubUrl"),
+                        System.getenv("SELENIUM_REMOTE_URL"),
+                        System.getenv("HUB_URL")
+                )
+                .filter(value -> value != null && !value.isBlank())
+                .findFirst()
+                .orElse("http://localhost:4444/wd/hub");
 
         driver = new TestiniumSeleniumDriver(new URL(remoteUrl), options);
     }
 
     @AfterAll
-    static void tearDown() {
+    protected static void tearDown() {
         if (driver != null) {
             driver.quit();
         }
