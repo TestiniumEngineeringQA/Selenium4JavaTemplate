@@ -1,4 +1,4 @@
-package com.testinium.selenium4javakartal;
+package com.testinium.selenium4javakartal.tests;
 
 import com.testinium.driver.TestiniumSeleniumDriver;
 import org.junit.jupiter.api.*;

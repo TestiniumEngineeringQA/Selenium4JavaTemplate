@@ -13,10 +13,10 @@ import java.net.URL;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseTest {
 
-    protected RemoteWebDriver driver;
+    protected static RemoteWebDriver driver;
 
     @BeforeAll
-    void setUp() throws MalformedURLException {
+    static void setUp() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
 
         String remoteUrl = System.getenv().getOrDefault(
@@ -28,7 +28,7 @@ public abstract class BaseTest {
     }
 
     @AfterAll
-    void tearDown() {
+    static void tearDown() {
         if (driver != null) {
             driver.quit();
         }
